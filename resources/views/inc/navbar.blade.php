@@ -15,13 +15,21 @@
                 class="nav-item"
                 @endif
                 >
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li @if (\Request::is('posts'))
+                class="nav-item active"
+                @else
+                class="nav-item"
+                    @endif
+            >
+                <a class="nav-link" href="/posts">Informacje</a>
             </li>
             <li @if (\Request::is('cam'))
                 class="nav-item active"
                 @else
                 class="nav-item"
-                    @endif
+                @endif
             >
                 <a class="nav-link" href="/cam">Kamera</a>
             </li>
@@ -29,7 +37,7 @@
                 class="nav-item active"
                 @else
                 class="nav-item"
-                    @endif
+                @endif
             >
                 <a class="nav-link" href="/services">Usługi</a>
             </li>
@@ -37,12 +45,23 @@
                 class="nav-item active"
                 @else
                 class="nav-item"
-                    @endif
+                @endif
             >
-                <a class="nav-link" href="/about">Informacje</a>
+                <a class="nav-link" href="/about">Kontakt</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+                 <li @if (\Request::is('posts/create'))
+                                 class="nav-item active"
+                                 @else
+                                 class="nav-item"
+                    @endif
+            >
+                <a class="nav-link" href="/posts/create">Utwórz post</a>
             </li>
 
         </ul>
