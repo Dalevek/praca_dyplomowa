@@ -30,12 +30,11 @@ Route::get('/services', 'PagesController@services');
 Route::get('/cam', 'PagesController@camera');
 Route::get('/pdf', 'PagesController@pdfViewer');
 
+Route::get('/modbus/index', 'ModbusController@logs');
+Route::get('/modbus/trends', 'ModbusController@trends');
+
 Route::resource('posts', 'PostsController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index');

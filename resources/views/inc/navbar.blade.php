@@ -7,7 +7,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExample03">
+    <div class="collapse navbar-collapse" id="app-navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li @if (\Request::is('/'))
                 class="nav-item active"
@@ -17,6 +17,7 @@
                 >
                 <a class="nav-link" href="/">Home</a>
             </li>
+            @if(!Auth::guest())
             <li @if (\Request::is('posts'))
                 class="nav-item active"
                 @else
@@ -33,12 +34,20 @@
             >
                 <a class="nav-link" href="/cam">Kamera</a>
             </li>
-            <li @if (\Request::is('services'))
+            <li @if (\Request::is('modbus/index'))
                 class="nav-item active"
                 @else
                 class="nav-item"
                 @endif
             >
+                <a class="nav-link" href="/modbus/index">Logi</a>
+            </li>
+                <li @if (\Request::is('services'))
+                    class="nav-item active"
+                    @else
+                    class="nav-item"
+                        @endif
+                >
                 <a class="nav-link" href="/services">Usługi</a>
             </li>
             <li @if (\Request::is('about'))
@@ -52,19 +61,37 @@
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
-
+            @endif
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-                 <li @if (\Request::is('posts/create'))
-                                 class="nav-item active"
-                                 @else
-                                 class="nav-item"
-                    @endif
-            >
-                <a class="nav-link" href="/posts/create">Utwórz post</a>
-            </li>
+    </div>
+    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+        <!-- Right Side Of Navbar -->
+        <ul class="navbar-nav navbar-right">
+            <!-- Authentication Links -->
+            @guest
+                <li class="nav-item" ><a class="nav-link" href="{{ route('login') }}">Zaloguj</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{{ route('register') }}">Rejestracja</a></li>
+            @else
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/dashboard">Panel użytkownika</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            Wyloguj
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
 
+
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            @endguest
         </ul>
-
     </div>
 </nav>

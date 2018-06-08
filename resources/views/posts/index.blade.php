@@ -4,10 +4,18 @@
     <h1>Posty</h1>
     @if(count($posts)>0)
         @foreach($posts as $post)
-            <div class="blog-post">
-                <h2 class="blog-post-title"><a href="/posts/{{$post -> id}}">{{$post -> title}}</a></h2>
-                <p class="blog-post-meta">Napisane {{$post -> created_at}}</p>
+            <div class="card" style="width: 75%;"> <!-- wcześniej był blog-post -->
+                <div class="card-header">
+                    <h3 class="blog-post-title"><a href="/posts/{{$post -> id}}">{{$post -> title}}</a></h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{!! $post -> body !!}</li>
+                </ul>
+                <div class="card-footer text-muted">
+                    Napisane <b>{{$post -> created_at}}</b> przez <b>{{$post->user->name}}</b>
+                </div>
             </div>
+            </br>
         @endforeach
 
 
