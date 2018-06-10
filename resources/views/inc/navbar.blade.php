@@ -42,13 +42,21 @@
             >
                 <a class="nav-link" href="/modbus/index">Logi</a>
             </li>
-                <li @if (\Request::is('services'))
-                    class="nav-item active"
-                    @else
-                    class="nav-item"
-                        @endif
-                >
-                <a class="nav-link" href="/services">Usługi</a>
+            <li @if (\Request::is('modbus/trends'))
+                class="nav-item active"
+                @else
+                class="nav-item"
+                    @endif
+            >
+                <a class="nav-link" href="/modbus/trends">Wykresy</a>
+            </li>
+            <li @if (\Request::is('services'))
+                class="nav-item active"
+                @else
+                class="nav-item"
+                    @endif
+            >
+            <a class="nav-link" href="/services">Usługi</a>
             </li>
             <li @if (\Request::is('about'))
                 class="nav-item active"

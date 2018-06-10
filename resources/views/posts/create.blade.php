@@ -11,9 +11,6 @@
             {{Form::label('body', 'Treść')}}
             {{Form::textarea('body','',['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder'=> 'Treść posta'])}}
         </div>
-        <div class="form-group">
-            {{Form::file}}
-        </div>
     {{Form::submit('Dodaj',['class' => 'btn btn-outline-dark'])}}
     {!! Form::close() !!}
 

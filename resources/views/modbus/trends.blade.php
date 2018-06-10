@@ -2,140 +2,22 @@
 
 @section('content')
     <h1>Wykresy</h1>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
-    <script>
-        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var config = {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: window.chartColors.red,
-                    borderColor: window.chartColors.red,
-                    data: [
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor()
-                    ],
-                    fill: false,
-                }, {
-                    label: 'My Second dataset',
-                    fill: false,
-                    backgroundColor: window.chartColors.blue,
-                    borderColor: window.chartColors.blue,
-                    data: [
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor()
-                    ],
-                }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Chart.js Line Chart'
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Month'
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        }
-                    }]
-                }
-            }
-        };
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-        window.onload = function() {
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myLine = new Chart(ctx, config);
-        };
+    {{--<a class="btn btn-outline-dark" href="/modbus/trends">Wszystkie</a>--}}
+    @foreach($unique as $name)
+        <a class="btn btn-outline-dark" href="/modbus/trends?search={{ $name }}">{{ $name }}</a>
+    @endforeach
 
-        document.getElementById('randomizeData').addEventListener('click', function() {
-            config.data.datasets.forEach(function(dataset) {
-                dataset.data = dataset.data.map(function() {
-                    return randomScalingFactor();
-                });
 
-            });
+    <div style="width:100%;">
+        {!! $chartjs->render() !!}
+    </div>
 
-            window.myLine.update();
-        });
-
-        var colorNames = Object.keys(window.chartColors);
-        document.getElementById('addDataset').addEventListener('click', function() {
-            var colorName = colorNames[config.data.datasets.length % colorNames.length];
-            var newColor = window.chartColors[colorName];
-            var newDataset = {
-                label: 'Dataset ' + config.data.datasets.length,
-                backgroundColor: newColor,
-                borderColor: newColor,
-                data: [],
-                fill: false
-            };
-
-            for (var index = 0; index < config.data.labels.length; ++index) {
-                newDataset.data.push(randomScalingFactor());
-            }
-
-            config.data.datasets.push(newDataset);
-            window.myLine.update();
-        });
-
-        document.getElementById('addData').addEventListener('click', function() {
-            if (config.data.datasets.length > 0) {
-                var month = MONTHS[config.data.labels.length % MONTHS.length];
-                config.data.labels.push(month);
-
-                config.data.datasets.forEach(function(dataset) {
-                    dataset.data.push(randomScalingFactor());
-                });
-
-                window.myLine.update();
-            }
-        });
-
-        document.getElementById('removeDataset').addEventListener('click', function() {
-            config.data.datasets.splice(0, 1);
-            window.myLine.update();
-        });
-
-        document.getElementById('removeData').addEventListener('click', function() {
-            config.data.labels.splice(-1, 1); // remove the label first
-
-            config.data.datasets.forEach(function(dataset) {
-                dataset.data.pop();
-            });
-
-            window.myLine.update();
-        });
-    </script>
+    {{--@foreach($chart_coll as $trend)--}}
+        {{--<div style="width:100%;">--}}
+            {{--{!! $trend->render() !!}--}}
+        {{--</div>--}}
+    {{--@endforeach--}}
 
 @endsection
