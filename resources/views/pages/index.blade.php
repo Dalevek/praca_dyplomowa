@@ -2,98 +2,76 @@
 
 @section('content')
     <h1>Strona główna</h1>
-    <p>Aplikacja webowa do sterowania i wyświetlaniem danych ze sterownika.</p>
+    <p>Aplikacja webowa</p>
 
     @php
-     {{
-    $response = null;
-    $t;
-    $test = exec("ping -c 1 192.168.1.120", $t ,$response);
-    if($response == 0)
-    {
-        echo "Connection with PLC (192.168.1.120)";
-    }
-    else
-    {
-        echo "Connection doesn't work with PLC (192.168.1.120";
-    }
-
-    }}
-    @endphp
-<br>
-    @php
-        {{
-       $response2 = null;
-       $t;
-       $test = exec("ping -c 1 192.168.1.6",$t, $response2);
-       if($response2 == 0)
-       {
-           echo "Connection with Raspberry PI [CAM] (192.168.1.6)";
-       }
-       else
-       {
-           echo "Connection doesn't work with Raspberry PI [CAM]  (192.168.1.6)";
-       }
-
-       }}
-    @endphp
-    <br>
-    @php
-            $connected = @fsockopen("192.168.1.5", 1880);
-                                                //website, port  (try 80 or 443)
+        function serverConnection($ip, $port) {
+           $connected = @fsockopen($ip, $port);
             if ($connected){
-                echo "[Raspberry PI] Server - Node-RED - START";
+                echo "<p class='text-success'>ONLINE</p>";
                 fclose($connected);
-
             }else{
-                echo "[Raspberry PI] Server - Node-RED - STOP";
-
-
+                echo "<p class='text-danger'>OFFLINE</p>";
             }
-    @endphp
-    <br>
-    @php
-        $connected = @fsockopen("192.168.1.5", 8000);
-                                            //website, port  (try 80 or 443)
-        if ($connected){
-            echo "[Raspberry PI] Server - Laravel - START";
-            fclose($connected);
-
-        }else{
-            echo "[Raspberry PI] Server - Laravel - STOP";
-
-
         }
     @endphp
-    <br>
-    @php
-        $connected = @fsockopen("127.0.0.1", 3306);
-                                            //website, port  (try 80 or 443)
-        if ($connected){
-            echo "[Raspberry PI] Server - MySQL - START";
-            fclose($connected);
+    <table class="table table-bordered" >
+        <thead>
+        <tr>
+            <th>Urządzenie</th>
+            <th>Serwer</th>
+            <th>IP</th>
+            <th>PORT</th>
+            <th>Status</th>
 
-        }else{
-            echo "[Raspberry PI] Server - MySQL - STOP";
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PLC XV-102</td>
+                <td>Sterownik</td>
+                <td>192.168.1.120</td>
+                <td>11740</td>
+                <td> @php serverConnection("192.168.1.120", 11740) @endphp</td>
+            </tr>
+            <tr>
+                <td>Raspberry PI 3</td>
+                <td>Redis</td>
+                <td>192.168.1.5</td>
+                <td>6379</td>
+                <td> @php serverConnection("192.168.1.5", 6379) @endphp</td>
+            </tr>
+            <tr>
+                <td>Raspberry PI 3</td>
+                <td>Laravel</td>
+                <td>192.168.1.5</td>
+                <td>8000</td>
+                <td> @php serverConnection("192.168.1.5", 8000) @endphp</td>
+            </tr>
+            <tr>
+                <td>Raspberry PI 3</td>
+                <td>MySQL</td>
+                <td>192.168.1.5</td>
+                <td>3306</td>
+                <td> @php serverConnection("127.0.0.1", 3306) @endphp</td>
+            </tr>
+            <tr>
+                <td>Raspberry PI 3</td>
+                <td>Node-RED</td>
+                <td>192.168.1.5</td>
+                <td>1880</td>
+                <td> @php serverConnection("192.168.1.5", 1880) @endphp</td>
+            </tr>
+            <tr>
+                <td>Raspberry PI</td>
+                <td>Kamera</td>
+                <td>192.168.1.6</td>
+                <td>8000</td>
+                <td> @php serverConnection("192.168.1.6", 8000) @endphp</td>
+            </tr>
+        </tbody>
+    </table>
 
 
-        }
-    @endphp
-    <br>
-    @php
-        $connected = @fsockopen("192.168.1.120", 11740);
-                                            //website, port  (try 80 or 443)
-        if ($connected){
-            echo "[PLC] Sterownik - START";
-            fclose($connected);
-
-        }else{
-            echo "[PLC] Sterownik - STOP";
-
-
-        }
-    @endphp
-    {{ link_to_asset('documents/3_Praca_MGR.pdf', 'Open the pdf!') }}
-    <br>
 
 @endsection

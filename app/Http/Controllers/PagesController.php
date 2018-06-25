@@ -14,7 +14,7 @@ class PagesController extends Controller
     }
 
     public function about() {
-        $title = 'Informacje';
+        $title = 'Praca Magisterska';
         //return view('pages.about', compact('title'));
         return view('pages.about') -> with('title', $title);
     }
@@ -33,11 +33,4 @@ class PagesController extends Controller
         return view('pages.cam') -> with('title', $title);
     }
 
-    public function pdfViewer() {
-        $title = 'Praca Magisterska';
-        $file = public_path('documents');
-        //return view('pages.about', compact('title'));
-        return view('pdf.index') -> with('title', $title)
-            ->with('file',$file);
-    }
 }

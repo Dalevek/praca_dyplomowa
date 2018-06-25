@@ -28,10 +28,10 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 Route::get('/cam', 'PagesController@camera');
-Route::get('/pdf', 'PagesController@pdfViewer');
 
 Route::get('/modbus/index', 'ModbusController@logs');
 Route::get('/modbus/trends', 'ModbusController@trends');
+Route::get('/modbus/{filtr}', 'ModbusController@redisLog');
 
 Route::resource('posts', 'PostsController');
 

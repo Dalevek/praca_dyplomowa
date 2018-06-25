@@ -56,18 +56,22 @@
                 class="nav-item"
                     @endif
             >
-            <a class="nav-link" href="/services">Usługi</a>
-            </li>
-            <li @if (\Request::is('about'))
-                class="nav-item active"
-                @else
-                class="nav-item"
-                @endif
-            >
-                <a class="nav-link" href="/about">Kontakt</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Status tagów</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/modbus/ryb_reczny">Tryb ręczny</a>
+                        <a class="dropdown-item" href="/modbus/ozycjonowanie">Pozycjonowanie</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/modbus/*">Wszystkie tagi</a>
+                    </div>
+                </li>
+
+
+
+
+
+                <a class="nav-link" href="/about">Praca magisterska</a>
             </li>
             @endif
         </ul>
@@ -96,7 +100,7 @@
                         </form>
 
 
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        {{--<a class="dropdown-item" href="#">Something else here</a>--}}
                     </div>
                 </div>
             @endguest

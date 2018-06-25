@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use DB;
 use Khill\Lavacharts\Lavacharts;
+use Illuminate\Support\Facades\Redis;
 
 
 class ModbusController extends Controller
@@ -97,6 +99,19 @@ class ModbusController extends Controller
 
 
         return view('modbus.index') -> with('title', $title)->with('data',$data)->with('unique',$unique);
+    }
+
+
+    public function redisLog($filtr) {
+        $tags = Redis::command('keys', ['*'.$filtr.'*']);
+        $values = collect();
+        foreach ($tags as $tag) {
+
+            array_add($values,$tag,Redis::command('get', [$tag]));
+        }
+
+
+        return view('modbus.proces') ->with('values',$values)->with('tags',$tags);
     }
 
 

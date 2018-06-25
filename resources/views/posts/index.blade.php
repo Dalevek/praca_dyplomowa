@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Posty</h1>
+    <h1>Informacje</h1>
     @if(count($posts)>0)
         @foreach($posts as $post)
             <div class="card" style="width: 75%;"> <!-- wcześniej był blog-post -->
